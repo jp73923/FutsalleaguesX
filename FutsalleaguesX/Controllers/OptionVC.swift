@@ -52,6 +52,10 @@ class OptionVC: UIViewController {
         self.vwPopup.isHidden = false
     }
     @IBAction func btnYesAction(_ sender: Any) {
+        if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+            arr.removeAllObjects()
+            UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
+        }
         self.vwPopup.isHidden = true
     }
     @IBAction func btnNoAction(_ sender: Any) {
