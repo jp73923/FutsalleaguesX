@@ -41,10 +41,6 @@ class TableVC: UIViewController {
         self.api_getLeagueTableList()
     }
     
-    func reloadTableData() {
-     //   self.api_getLeagueTableList()
-    }
-    
     //MARK: - IBActions
     @IBAction func btnPlusMinusAction(_ sender: UIButton) {
         if self.vwMinus.isHidden == false {
@@ -56,12 +52,33 @@ class TableVC: UIViewController {
             self.vwPlus.isHidden = true
             self.btnPlusMinus.isSelected = false
         }
-        self.tblTable.reloadData()
+        self.tblTable?.reloadData()
     }
 }
 
 //MARK: - UITableViewDelegate,UITableViewDataSource
 extension TableVC:UITableViewDelegate,UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        var numOfSections: Int = 0
+        if self.arrTableLeague.count > 0
+        {
+            tableView.separatorStyle = .singleLine
+            numOfSections            = 1
+            tableView.backgroundView = nil
+        }
+        else
+        {
+            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No teams available"
+            noDataLabel.textColor     = UIColor.white
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+        }
+        return numOfSections
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrTableLeague.count
     }
@@ -73,7 +90,7 @@ extension TableVC:UITableViewDelegate,UITableViewDataSource {
                 cell.lblScorePTS.text = obj["points"] as? String ?? ""
                 if let objTeam = obj["team"] as? [String:Any] {
                     cell.lblTeamName.text = objTeam["name"] as? String ?? ""
-                    cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
+                    cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
                 }
                 
                 let win = Int((obj["win"] as? String ?? ""))
@@ -93,7 +110,7 @@ extension TableVC:UITableViewDelegate,UITableViewDataSource {
             if let obj = self.arrTableLeague[indexPath.row] as? [String:Any] {
                 cell.lblScorePTS.text = obj["points"] as? String ?? ""
                 if let objTeam = obj["team"] as? [String:Any] {
-                    cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
+                    cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
                 }
                 cell.lblScoreW.text = obj["win"] as? String ?? ""
                 cell.lblScoreL.text = obj["loss"] as? String ?? ""
@@ -127,6 +144,7 @@ extension TableVC {
                 })
                 return
             } else if let dicData = responseDict, dicData.keys.count > 0 {
+                self.arrTableLeague.removeAll()
                 if let result = dicData["results"] as? [String:Any] , !result.isEmpty {
                     if let objOverAll = result["overall"] as? [String:Any] {
                         if let arrTblRows = objOverAll["tables"] as? [[String:Any]] {
@@ -135,7 +153,6 @@ extension TableVC {
                                     for i in 0 ..< arrRows.count {
                                         self.arrTableLeague.append(arrRows[i])
                                     }
-                                    self.tblTable.reloadData()
                                 }
                             }
                         }

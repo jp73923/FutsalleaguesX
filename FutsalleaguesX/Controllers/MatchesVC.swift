@@ -26,7 +26,6 @@ class MatchesVC: UIViewController {
     
     //MARK: - Global Variables
     var isPast = false
-    var arrSelection = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     var arrFilterMatches = [[String:Any]]()
     var arrAllMatches = [[String:Any]]()
 
@@ -53,10 +52,17 @@ class MatchesVC: UIViewController {
         self.api_getUpcomingMatches()
     }
     @IBAction func btnIntrestAction(_ sender: UIButton) {
-        if self.arrSelection[sender.tag] == 0 {
-            self.arrSelection[sender.tag] = 1
+        if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+            if let obj = self.arrAllMatches[sender.tag] as? NSDictionary {
+                arr.add(obj)
+            }
+            UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
         } else {
-            self.arrSelection[sender.tag] = 0
+            var arr = NSMutableArray()
+            if let obj = self.arrAllMatches[sender.tag] as? NSDictionary {
+                arr.add(obj)
+            }
+            UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
         }
         self.tblMatch.reloadData()
     }
@@ -92,14 +98,28 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tblMatch.dequeueReusableCell(withIdentifier: "cellMatch") as! cellMatch
         if self.isPast {
-            if let objMatch =  self.arrAllMatches[indexPath.row] as? [String:Any] {
+            if let objMatch = self.arrAllMatches[indexPath.row] as? [String:Any] {
+                if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+                    for i in 0 ..< arr.count {
+                        if let obj = arr[i] as? [String:Any] {
+                            if (obj["game_id"] as? Double) ?? 0 == (objMatch["game_id"] as? Double) ?? 0 {
+                                cell.btnIntrest.isSelected = true
+                                break
+                            } else {
+                                cell.btnIntrest.isSelected = false
+                            }
+                        }
+                    }
+                } else {
+                    cell.btnIntrest.isSelected = false
+                }
                 if let homeTeam = objMatch["home"] as? [String:Any] {
                     cell.lblTeam1.text = homeTeam["name"] as? String ?? ""
-                    cell.imgTeam1.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\(homeTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_1_placeholder"))
+                    cell.imgTeam1.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\(homeTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_1_placeholder"))
                 }
                 if let awayTeam = objMatch["away"] as? [String:Any] {
                     cell.lblTeam2.text = awayTeam["name"] as? String ?? ""
-                    cell.imgTeam2.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\(awayTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_2_placeholder"))
+                    cell.imgTeam2.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\(awayTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_2_placeholder"))
                 }
                 cell.lblScore.text = objMatch["score"] as? String ?? ""
                 if let startTimestamp = Int(objMatch["time"] as? String ?? "") {
@@ -112,13 +132,27 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
             }
         } else {
             if let objMatch =  self.arrAllMatches[indexPath.row] as? [String:Any] {
+                if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+                    for i in 0 ..< arr.count {
+                        if let obj = arr[i] as? [String:Any] {
+                            if (obj["game_id"] as? Double) ?? 0 == (objMatch["game_id"] as? Double) ?? 0 {
+                                cell.btnIntrest.isSelected = true
+                                break
+                            } else {
+                                cell.btnIntrest.isSelected = false
+                            }
+                        }
+                    }
+                } else {
+                    cell.btnIntrest.isSelected = false
+                }
                 if let homeTeam = objMatch["home"] as? [String:Any] {
                     cell.lblTeam1.text = homeTeam["name"] as? String ?? ""
-                    cell.imgTeam1.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\(homeTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_1_placeholder"))
+                    cell.imgTeam1.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\(homeTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_1_placeholder"))
                 }
                 if let awayTeam = objMatch["away"] as? [String:Any] {
                     cell.lblTeam2.text = awayTeam["name"] as? String ?? ""
-                    cell.imgTeam2.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/soccer/" + "\(awayTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_2_placeholder"))
+                    cell.imgTeam2.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\(awayTeam["id"] as? String ?? "")" + ".png"), placeholderImage: UIImage.init(named: "ic_team_2_placeholder"))
                 }
                 if let startTimestamp = Int(objMatch["time"] as? String ?? "") {
                     let formaor = DateFormatter()
@@ -133,8 +167,27 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
         cell.imgVS.isHidden = self.isPast ? true : false
         cell.btnIntrest.tag = indexPath.row
         cell.btnIntrest.addTarget(self, action: #selector(self.btnIntrestAction(_:)), for: UIControl.Event.touchUpInside)
-        cell.btnIntrest.isSelected = self.arrSelection[indexPath.row] == 1 ? true : false
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let dict = self.arrAllMatches[indexPath.row] as? [String:Any] {
+            if self.isPast {
+                let vc = loadVC(strStoryboardId: SB_MAIN, strVCId: idSelfEventVC) as! SelfEventVC
+                if let objMatch =  self.arrAllMatches[indexPath.row] as? [String:Any] {
+                    vc.objMatch = objMatch
+                }
+                APP_DELEGATE.appNavigation?.pushViewController(vc, animated: true)
+
+            } else {
+                let vc = loadVC(strStoryboardId: SB_MAIN, strVCId: idH2HVC) as! H2HVC
+                if let objMatch =  self.arrAllMatches[indexPath.row] as? [String:Any] {
+                    vc.objMatch = objMatch
+                }
+                APP_DELEGATE.appNavigation?.pushViewController(vc, animated: true)
+
+            }
+        }
     }
 }
 
@@ -142,7 +195,7 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
 extension MatchesVC {
     func api_getPastMatches(){
         HttpRequestManager.shared.getRequest(
-            requestURL:URL_Domain + "task=enddata&sport=soccer&league=" + APP_DELEGATE.Id,
+            requestURL:URL_Domain + "task=enddata&sport=futsal&league=" + APP_DELEGATE.Id,
             param:[:],
             showLoader:true)
         {(error,responseDict) -> Void in
@@ -162,7 +215,7 @@ extension MatchesVC {
     
     func api_getUpcomingMatches(){
         HttpRequestManager.shared.getRequest(
-            requestURL:URL_Domain + "task=predata&sport=soccer&league=" + APP_DELEGATE.Id,
+            requestURL:URL_Domain + "task=predata&sport=futsal&league=" + APP_DELEGATE.Id,
             param:[:],
             showLoader:true)
         {(error,responseDict) -> Void in

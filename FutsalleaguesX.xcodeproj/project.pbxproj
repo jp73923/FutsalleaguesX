@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		220458E1298C08E60091AE7F /* IntrestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220458E0298C08E60091AE7F /* IntrestVC.swift */; };
 		220458E3298C11560091AE7F /* TableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220458E2298C11560091AE7F /* TableVC.swift */; };
+		2223D2F6298D438100C90192 /* H2HVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D2F5298D438100C90192 /* H2HVC.swift */; };
+		2223D2F9298D442C00C90192 /* bg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2223D2F8298D442C00C90192 /* bg.mp3 */; };
+		2223D2FB298D462D00C90192 /* SelfEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D2FA298D462D00C90192 /* SelfEventVC.swift */; };
 		225A9B32298B7944005B6094 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225A9B31298B7944005B6094 /* AppDelegate.swift */; };
 		225A9B36298B7944005B6094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225A9B35298B7944005B6094 /* ViewController.swift */; };
 		225A9B39298B7944005B6094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225A9B37298B7944005B6094 /* Main.storyboard */; };
@@ -46,6 +49,9 @@
 		13544BA5A6692943B8F65B1A /* Pods_FutsalleaguesX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FutsalleaguesX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		220458E0298C08E60091AE7F /* IntrestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestVC.swift; sourceTree = "<group>"; };
 		220458E2298C11560091AE7F /* TableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableVC.swift; sourceTree = "<group>"; };
+		2223D2F5298D438100C90192 /* H2HVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H2HVC.swift; sourceTree = "<group>"; };
+		2223D2F8298D442C00C90192 /* bg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bg.mp3; sourceTree = "<group>"; };
+		2223D2FA298D462D00C90192 /* SelfEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfEventVC.swift; sourceTree = "<group>"; };
 		225A9B2E298B7944005B6094 /* FutsalleaguesX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FutsalleaguesX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		225A9B31298B7944005B6094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		225A9B35298B7944005B6094 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +103,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2223D2F7298D441100C90192 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				2223D2F8298D442C00C90192 /* bg.mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		225A9B25298B7944005B6094 = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +227,7 @@
 		225A9B60298BCB9C005B6094 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2223D2F7298D441100C90192 /* Audio */,
 				225A9B61298BCB9C005B6094 /* Images */,
 				225A9B63298BCB9C005B6094 /* Constants */,
 				225A9B67298BCB9C005B6094 /* Fonts */,
@@ -266,6 +281,8 @@
 				225A9B88298BE30B005B6094 /* MatchesVC.swift */,
 				220458E0298C08E60091AE7F /* IntrestVC.swift */,
 				220458E2298C11560091AE7F /* TableVC.swift */,
+				2223D2F5298D438100C90192 /* H2HVC.swift */,
+				2223D2FA298D462D00C90192 /* SelfEventVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -349,6 +366,7 @@
 			files = (
 				225A9B80298BCB9C005B6094 /* Inter-Bold.ttf in Resources */,
 				225A9B83298BCB9C005B6094 /* Inter-Semibold.ttf in Resources */,
+				2223D2F9298D442C00C90192 /* bg.mp3 in Resources */,
 				225A9B3E298B7945005B6094 /* LaunchScreen.storyboard in Resources */,
 				225A9B3B298B7945005B6094 /* Assets.xcassets in Resources */,
 				225A9B81298BCB9C005B6094 /* Inter-Medium.ttf in Resources */,
@@ -410,9 +428,11 @@
 				225A9B36298B7944005B6094 /* ViewController.swift in Sources */,
 				225A9B87298BD7CB005B6094 /* OptionVC.swift in Sources */,
 				225A9B74298BCB9C005B6094 /* DefaulValues.swift in Sources */,
+				2223D2F6298D438100C90192 /* H2HVC.swift in Sources */,
 				225A9B7B298BCB9C005B6094 /* AppUpdater.swift in Sources */,
 				225A9B78298BCB9C005B6094 /* LoadingHud.swift in Sources */,
 				225A9B7F298BCB9C005B6094 /* ReachabilityManager.swift in Sources */,
+				2223D2FB298D462D00C90192 /* SelfEventVC.swift in Sources */,
 				225A9B32298B7944005B6094 /* AppDelegate.swift in Sources */,
 				225A9B7A298BCB9C005B6094 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				225A9B73298BCB9C005B6094 /* UILabelExtensions.swift in Sources */,

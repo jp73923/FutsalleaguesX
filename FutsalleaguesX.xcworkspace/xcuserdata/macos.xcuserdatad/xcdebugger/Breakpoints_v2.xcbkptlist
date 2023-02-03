@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D03C1769-38B0-4C99-AD1B-4DB469623F4A"
+            uuid = "BD1D25A3-83EC-4700-923F-3F8CC106C802"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutsalleaguesX/Controllers/TableVC.swift"
+            filePath = "FutsalleaguesX/Controllers/SelfEventVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "api_getH2hMatches(gameId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

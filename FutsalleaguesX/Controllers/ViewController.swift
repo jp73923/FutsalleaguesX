@@ -24,6 +24,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var heightDropDown: NSLayoutConstraint!
     @IBOutlet weak var lblSelectedLeague: UILabel!
 
+    //MARK: - Global Variables
+    var arrTableLeague = [[String:Any]]()
+    var tblVC:TableVC?
+    var matchVC:MatchesVC?
+
     //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +36,19 @@ class ViewController: UIViewController {
         self.btnMatch.isSelected = true
         self.vwMatch.isHidden = false
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromTable" {
+            if let vc = segue.destination as? TableVC {
+                self.tblVC = vc
+            }
+        }
+        if segue.identifier == "fromMatches" {
+            if let vc = segue.destination as? MatchesVC {
+                self.matchVC = vc
+            }
+        }
+    }
+        
     //MARK: - Custom Functions
     func resetAllButtons() {
         self.btnMatch.isSelected = false
@@ -93,6 +110,17 @@ class ViewController: UIViewController {
             break
         }
         heightDropDown.constant = 0.0
+        
+        if self.btnTable.isSelected {
+            if let vc = self.tblVC {
+                vc.api_getLeagueTableList()
+            }
+        }
+        if self.btnMatch.isSelected {
+            if let vc = self.matchVC {
+                vc.api_getPastMatches()
+            }
+        }
     }
     @IBAction func btnMatchAction(_ sender: Any) {
         self.resetAllButtons()
@@ -120,4 +148,3 @@ class ViewController: UIViewController {
         self.vwIntrest.isHidden = false
     }
 }
-

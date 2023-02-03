@@ -27,21 +27,13 @@ public let SB_MAIN :String = "Main"
 
 //MARK:- VIEW CONTROLLER ID
 public let idViewController = "ViewController"
-public let idBalanceVC = "BalanceVC"
-public let idPastMatchesStatasticsVC = "PastMatchesStatasticsVC"
-public let idUpcomingMatchesStatasticsVC = "UpcomingMatchesStatasticsVC"
-public let idRecentMeetingsVC = "RecentMeetingsVC"
+public let idTableVC = "TableVC"
+public let idH2HVC = "H2HVC"
+public let idSelfEventVC = "SelfEventVC"
 
 //MARK:- USER DEFAULTS KEY
 let UD_Favourite                      = "UDFavourite"
-let UD_DeletedMatches                 = "UD_DeletedMatches"
-let UD_leftIntrestBasketballIndex     = "UDleftIntrestBasketballIndex"
-let UD_leftPredictHoceyIndex          = "UDleftPredictHoceyIndex"
-let UD_rightIntrestBasketballIndex    = "UDrightIntrestBasketballIndex"
-let UD_rightPredictHoceyIndex         = "UDrightPredictHoceyIndex"
-let UD_PastIntrest                    = "UDPastIntrest"
-
-
+let UD_IdFavourite                    = "UDIdFavourite"
 
 //MARK:- FONT NAMES
 let FT_Regular = "Inter-Regular"
