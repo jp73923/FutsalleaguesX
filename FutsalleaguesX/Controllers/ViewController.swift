@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     var arrTableLeague = [[String:Any]]()
     var tblVC:TableVC?
     var matchVC:MatchesVC?
+    var intrestVC:IntrestVC?
 
     //MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -45,6 +46,11 @@ class ViewController: UIViewController {
         if segue.identifier == "fromMatches" {
             if let vc = segue.destination as? MatchesVC {
                 self.matchVC = vc
+            }
+        }
+        if segue.identifier == "fromIntrest" {
+            if let vc = segue.destination as? IntrestVC {
+                self.intrestVC = vc
             }
         }
     }
@@ -146,5 +152,10 @@ class ViewController: UIViewController {
         self.resetAllButtons()
         self.btnIntrest.isSelected = true
         self.vwIntrest.isHidden = false
+        if self.btnIntrest.isSelected {
+            if let vc = self.intrestVC {
+                vc.tblIntrest.reloadData()
+            }
+        }
     }
 }

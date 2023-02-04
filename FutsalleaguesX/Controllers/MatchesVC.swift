@@ -52,17 +52,48 @@ class MatchesVC: UIViewController {
         self.api_getUpcomingMatches()
     }
     @IBAction func btnIntrestAction(_ sender: UIButton) {
-        if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
-            if let obj = self.arrAllMatches[sender.tag] as? NSDictionary {
-                arr.add(obj)
-            }
-            UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
-        } else {
+        if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 { } else {
             var arr = NSMutableArray()
             if let obj = self.arrAllMatches[sender.tag] as? NSDictionary {
                 arr.add(obj)
             }
             UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
+        }
+        
+        let userDefaults = UserDefaults.standard
+        if let arr = userDefaults.value(forKey: UD_IdFavourite) as? [String]{
+            var array = [String]()
+            if let obj = self.arrAllMatches[sender.tag] as? [String:Any] {
+                array = arr
+                if let gameId = obj["game_id"] as? String {
+                    if array.contains(gameId) {
+                        if let index = array.index(of: gameId) {
+                            array.remove(at: index)
+                            if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+                                arr.removeObject(at: index)
+                                UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
+                            }
+                        }
+                    } else {
+                        array.append(gameId)
+                        if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
+                            if let obj = self.arrAllMatches[sender.tag] as? NSDictionary {
+                                arr.add(obj)
+                            }
+                            UserDefaultManager.setCustomArrayToUserDefaults(array: arr, key: UD_Favourite)
+                        }
+                    }
+                }
+            }
+            userDefaults.set(array, forKey: UD_IdFavourite)
+        } else {
+            var array = [String]()
+            if let obj = self.arrAllMatches[sender.tag] as? [String:Any] {
+                if let gameId = obj["game_id"] as? String {
+                    array.append(gameId)
+                }
+            }
+            userDefaults.set(array, forKey: UD_IdFavourite)
         }
         self.tblMatch.reloadData()
     }
@@ -99,16 +130,12 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
         let cell = self.tblMatch.dequeueReusableCell(withIdentifier: "cellMatch") as! cellMatch
         if self.isPast {
             if let objMatch = self.arrAllMatches[indexPath.row] as? [String:Any] {
-                if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
-                    for i in 0 ..< arr.count {
-                        if let obj = arr[i] as? [String:Any] {
-                            if (obj["game_id"] as? Double) ?? 0 == (objMatch["game_id"] as? Double) ?? 0 {
-                                cell.btnIntrest.isSelected = true
-                                break
-                            } else {
-                                cell.btnIntrest.isSelected = false
-                            }
-                        }
+                let userDefaults = UserDefaults.standard
+                if let arr = userDefaults.value(forKey: UD_IdFavourite) as? [String]{
+                    if arr.contains((objMatch["game_id"] as? String ?? "0")) {
+                        cell.btnIntrest.isSelected = true
+                    } else {
+                        cell.btnIntrest.isSelected = false
                     }
                 } else {
                     cell.btnIntrest.isSelected = false
@@ -132,16 +159,12 @@ extension MatchesVC:UITableViewDelegate,UITableViewDataSource {
             }
         } else {
             if let objMatch =  self.arrAllMatches[indexPath.row] as? [String:Any] {
-                if let arr = UserDefaultManager.getCustomArrayFromUserDefaults(key: UD_Favourite) as? NSMutableArray, arr.count > 0 {
-                    for i in 0 ..< arr.count {
-                        if let obj = arr[i] as? [String:Any] {
-                            if (obj["game_id"] as? Double) ?? 0 == (objMatch["game_id"] as? Double) ?? 0 {
-                                cell.btnIntrest.isSelected = true
-                                break
-                            } else {
-                                cell.btnIntrest.isSelected = false
-                            }
-                        }
+                let userDefaults = UserDefaults.standard
+                if let arr = userDefaults.value(forKey: UD_IdFavourite) as? [String]{
+                    if arr.contains((objMatch["game_id"] as? String ?? "0")) {
+                        cell.btnIntrest.isSelected = true
+                    } else {
+                        cell.btnIntrest.isSelected = false
                     }
                 } else {
                     cell.btnIntrest.isSelected = false

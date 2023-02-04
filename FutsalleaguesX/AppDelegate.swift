@@ -27,16 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         APP_DELEGATE.appNavigation = UINavigationController(rootViewController: loadVC(strStoryboardId: SB_MAIN, strVCId: idViewController))
         APP_DELEGATE.appNavigation?.isNavigationBarHidden = true
         APP_DELEGATE.window?.rootViewController = APP_DELEGATE.appNavigation
-        self.playBGAudio()
+        self.playBGAudio(isStop: false)
     }
     
-    func playBGAudio() {
+    func playBGAudio(isStop:Bool) {
         if let path = Bundle.main.path(forResource: "bg", ofType: "mp3") {
             let filePath = NSURL(fileURLWithPath:path)
             self.player = try! AVAudioPlayer.init(contentsOf: filePath as URL)
             self.player?.numberOfLoops = -1 //logic for infinite loop
             self.player?.prepareToPlay()
-            self.player?.play()
+            if isStop {
+                self.player?.stop()
+            } else {
+                self.player?.play()
+            }
         }
         
         let audioSession = AVAudioSession.sharedInstance()

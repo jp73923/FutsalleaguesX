@@ -35,10 +35,12 @@ class OptionVC: UIViewController {
     @IBAction func btnOnSound(_ sender: Any) {
         self.btnOnSound.isSelected = true
         self.btnOffSound.isSelected = false
+        APP_DELEGATE.playBGAudio(isStop: false)
     }
     @IBAction func btnOffSound(_ sender: Any) {
         self.btnOnSound.isSelected = false
         self.btnOffSound.isSelected = true
+        APP_DELEGATE.playBGAudio(isStop: true)
     }
     @IBAction func btnOnCalendar(_ sender: Any) {
         self.btnOnCalendar.isSelected = true
