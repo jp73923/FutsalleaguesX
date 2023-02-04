@@ -1731,6 +1731,7 @@
                     </view>
                     <connections>
                         <outlet property="btnPlusMinus" destination="6mv-zh-rKn" id="bbH-RX-e2o"/>
+                        <outlet property="imgTopTeam" destination="Lb8-oM-FxO" id="89U-in-p9f"/>
                         <outlet property="tblTable" destination="nst-l8-pJQ" id="Tfd-g7-SfP"/>
                         <outlet property="vwMinus" destination="VUW-WQ-kRr" id="2Cs-EF-0qT"/>
                         <outlet property="vwPlus" destination="YVL-2Z-eqH" id="Kbv-9W-apV"/>

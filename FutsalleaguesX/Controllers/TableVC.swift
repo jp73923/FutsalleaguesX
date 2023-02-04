@@ -31,6 +31,7 @@ class TableVC: UIViewController {
     @IBOutlet weak var vwMinus: UIView!
     @IBOutlet weak var btnPlusMinus: UIButton!
     @IBOutlet weak var tblTable: UITableView!
+    @IBOutlet weak var imgTopTeam: UIImageView!
     
     //MARK: - Global Variables
     var arrTableLeague = [[String:Any]]()
@@ -91,6 +92,9 @@ extension TableVC:UITableViewDelegate,UITableViewDataSource {
                 if let objTeam = obj["team"] as? [String:Any] {
                     cell.lblTeamName.text = objTeam["name"] as? String ?? ""
                     cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
+                    if indexPath.row == 0 {
+                        self.imgTopTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_team_placeholder"))
+                    }
                 }
                 
                 let win = Int((obj["win"] as? String ?? ""))
@@ -111,6 +115,9 @@ extension TableVC:UITableViewDelegate,UITableViewDataSource {
                 cell.lblScorePTS.text = obj["points"] as? String ?? ""
                 if let objTeam = obj["team"] as? [String:Any] {
                     cell.imgTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_club_placeholder"))
+                    if indexPath.row == 0 {
+                        self.imgTopTeam.sd_setImage(with: URL.init(string: "https://spoyer.com/api/team_img/futsal/" + "\((objTeam["id"] as? String ?? ""))" + ".png"), placeholderImage: UIImage.init(named: "ic_team_placeholder"))
+                    }
                 }
                 cell.lblScoreW.text = obj["win"] as? String ?? ""
                 cell.lblScoreL.text = obj["loss"] as? String ?? ""
