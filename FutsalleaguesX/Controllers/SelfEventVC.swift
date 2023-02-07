@@ -95,12 +95,14 @@ extension SelfEventVC:UITableViewDelegate,UITableViewDataSource {
         if let dict = self.arrh2h[indexPath.row] as? [String:Any] {
             if let dictHome = dict["home"] as? [String:Any] {
                 if let img1 = dictHome["id"] as? String {
+                    cell.lblTeam1.text = dictHome["name"] as? String ?? ""
                     cell.lblScoreLeft.text = (dict["ss"] as? String ?? "")
                     cell.imgTeam1.sd_setImage(with: NSURL.init(string: String.init(format: "https://spoyer.com/api/team_img/futsal/%@.png", img1)) as URL?, placeholderImage: UIImage.init(named: "ic_team_1_placeholder"))
                 }
             }
             if let dictaway = dict["away"] as? [String:Any] {
                 if let img1 = dictaway["id"] as? String {
+                    cell.lblTeam2.text = dictaway["name"] as? String ?? ""
                     cell.lblScoreRight.text = (dict["ss"] as? String ?? "")
                     cell.imgTeam2.sd_setImage(with: NSURL.init(string: String.init(format: "https://spoyer.com/api/team_img/futsal/%@.png", img1)) as URL?, placeholderImage: UIImage.init(named: "ic_team_2_placeholder"))
                 }
@@ -109,16 +111,14 @@ extension SelfEventVC:UITableViewDelegate,UITableViewDataSource {
             let Score2 = Int((dict["ss"] as? String ?? "").components(separatedBy: "-")[1]) ?? 0
             cell.lblScoreRight.text = (dict["ss"] as? String ?? "")
             if Score2 > Score1 {
-                cell.lblScoreLeftStatus.textColor = UIColor.green
-                cell.lblScoreRightStatus.textColor = UIColor.red
-            }
-            if Score2 < Score1 {
-                cell.lblScoreLeftStatus.textColor = UIColor.green
-                cell.lblScoreRightStatus.textColor = UIColor.red
-            }
-            if Score2 == Score1 {
-                cell.lblScoreLeftStatus.textColor = UIColor.green
-                cell.lblScoreRightStatus.textColor = UIColor.red
+                cell.lblScoreLeftStatus.backgroundColor = UIColor.green
+                cell.lblScoreRightStatus.backgroundColor = UIColor.red
+            } else if Score2 < Score1 {
+                cell.lblScoreLeftStatus.backgroundColor = UIColor.red
+                cell.lblScoreRightStatus.backgroundColor = UIColor.green
+            } else if Score2 == Score1 {
+                cell.lblScoreLeftStatus.backgroundColor = UIColor.green
+                cell.lblScoreRightStatus.backgroundColor = UIColor.red
             }
         }
         return cell
